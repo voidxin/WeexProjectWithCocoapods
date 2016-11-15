@@ -7,7 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import <WeexSDK/WeexSDK.h>
 
+#import "ViewController.h"
+#import "ImageDownloadder.h"
 @interface AppDelegate ()
 
 @end
@@ -15,11 +18,38 @@
 @implementation AppDelegate
 
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self weexSetter];
+    [self rootViewSetter];
+    
     return YES;
 }
-
+#pragma mark rootViewSetter
+- (void)rootViewSetter{
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+    [self.window makeKeyAndVisible];
+}
+#pragma mark  weexSettter
+- (void)weexSetter{
+    //业务配置，非必需
+    [WXAppConfiguration setAppGroup:@"AliApp"];
+    [WXAppConfiguration setAppName:@"WeexDemo"];
+    [WXAppConfiguration setAppVersion:@"1.0.0"];
+    
+    //初始化SDK环境
+    [WXSDKEngine initSDKEnviroment];
+    
+    //重写图片加载器
+    [WXSDKEngine registerHandler:[ImageDownloadder new] withProtocol:@protocol(WXImgLoaderProtocol)];
+    
+    //设置Log输出等级：调试环境默认为Debug，正式发布会自动关闭。
+    [WXLog setLogLevel: WXLogLevelAll];//输出日志
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -1,9 +1,9 @@
 //
 //  ViewController.h
-//  WeexBuildExample
+//  WeexDemo
 //
-//  Created by voidxin on 16/11/15.
-//  Copyright © 2016年 wugumofang. All rights reserved.
+//  Created by 张新 on 16/9/14.
+//  Copyright © 2016年 voidxin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
